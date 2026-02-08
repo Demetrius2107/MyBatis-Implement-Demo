@@ -1,9 +1,11 @@
 package com.shanyue.mybatis.binding;
 
+import cn.hutool.core.lang.ClassScanner;
 import com.shanyue.mybatis.session.SqlSession;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 映射器注册机
@@ -47,5 +49,11 @@ public class MapperRegistry {
         return knownMappers.containsKey(type);
     }
 
+    public void addMappers(String packageName) {
+        Set<Class<?>> mapperSet = ClassScanner.scanPackage(packageName);
+        for (Class<?> mapperClass : mapperSet) {
+            addMapper(mapperClass);
+        }
+    }
 
 }
